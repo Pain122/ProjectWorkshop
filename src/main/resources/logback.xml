@@ -1,0 +1,22 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+          <providers>
+              <pattern>
+                  <pattern>
+                      { "a": 1 }
+                  </pattern>
+              </pattern>
+              <timestamp/>
+              <logLevel/>
+              <message/>
+              <provider class="tofu.logging.TofuLoggingProvider"/>
+          </providers>
+      </encoder>
+  </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>  
