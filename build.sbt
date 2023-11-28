@@ -1,8 +1,6 @@
 scalaVersion := "2.13.10"
 name := "wk"
 
-
-
 libraryDependencies ++= Seq(
   "com.softwaremill.sttp.tapir" %% "tapir-core" % "1.4.0",
   "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % "1.4.0",
@@ -22,7 +20,8 @@ libraryDependencies ++= Seq(
   "tf.tofu" %% "derevo-circe" % "0.13.0",
   "io.estatico" %% "newtype" % "0.4.4",
   "com.github.pureconfig" %% "pureconfig" % "0.17.4",
-  "org.http4s" %% "http4s-ember-server" % "0.23.19"
+  "org.http4s" %% "http4s-ember-server" % "0.23.19",
+  "com.softwaremill.sttp.tapir" %% "tapir-derevo" % "1.9.2"
 )
 
 dependencyOverrides += "io.circe" %% "circe-core" % "0.14.3"
