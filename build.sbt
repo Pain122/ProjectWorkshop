@@ -24,6 +24,8 @@ libraryDependencies ++= Seq(
   "com.softwaremill.sttp.tapir" %% "tapir-derevo" % "1.9.2"
 )
 
+addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
+
 dependencyOverrides += "io.circe" %% "circe-core" % "0.14.3"
 
 scalacOptions ++= Seq("-Ymacro-annotations")

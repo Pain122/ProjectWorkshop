@@ -1,3 +1,4 @@
+import cats.data.ReaderT
 import cats.effect.{ExitCode, IO, IOApp, Resource}
 import config.AppConfig
 import controller.TodoController
@@ -6,6 +7,8 @@ import doobie.util.transactor.Transactor
 import com.comcast.ip4s._
 import eu.timepit.refined.string.IPv4
 import com.comcast.ip4s._
+import domain.RequestContext
+import domain.RequestContext.ContextualIO
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.Router
 import service.TodoStorage
@@ -21,15 +24,15 @@ object Main extends IOApp {
     (for {
       _ <- Resource.eval(mainLogs.info("Starting todos service...."))
       config <- Resource.eval(AppConfig.load)
-      transactor = Transactor.fromDriverManager[IO](
+      transactor = Transactor.fromDriverManager[ContextualIO](
         config.db.driver,
         config.db.url,
         config.db.user,
         config.db.password
       )
       sql = TodoSql.make
-      storage = TodoStorage.make(sql, transactor)
-      controller = TodoController.make(storage)
+      storage: TodoStorage[ContextualIO] = TodoStorage.make[ContextualIO](sql, transactor)
+      controller: TodoController[IO] = TodoController.make(storage)
       routes = Http4sServerInterpreter[IO]().toRoutes(controller.all)
       httpApp = Router("/" -> routes).orNotFound
       _ <- EmberServerBuilder
